@@ -1,0 +1,48 @@
+{
+  "trained_at": "2026-03-05T00:04:21.795235",
+  "models": {
+    "spending_predictor": {
+      "type": "RandomForestRegressor",
+      "purpose": "Predict spending amounts",
+      "file": "spending_predictor.pkl"
+    },
+    "anomaly_detector": {
+      "type": "RandomForestClassifier",
+      "purpose": "Detect spending anomalies",
+      "file": "anomaly_detector.pkl"
+    },
+    "category_predictor": {
+      "type": "RandomForestClassifier",
+      "purpose": "Predict transaction category",
+      "file": "category_predictor.pkl"
+    },
+    "trend_analyzer": {
+      "type": "LinearRegression",
+      "purpose": "Analyze spending trends",
+      "file": "trend_analyzer.pkl"
+    }
+  },
+  "features": {
+    "spending_predictor": [
+      "day_of_month",
+      "day_of_week",
+      "week_of_year",
+      "is_weekend",
+      "category"
+    ],
+    "anomaly_detector": [
+      "day_of_month",
+      "day_of_week",
+      "week_of_year",
+      "is_weekend",
+      "category"
+    ],
+    "category_predictor": [
+      "day_of_month",
+      "day_of_week",
+      "week_of_year",
+      "is_weekend",
+      "amount"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "mywelthai-backend",
+  "version": "1.0.0",
+  "description": "Flask backend for MyWelthAI personal finance tracker",
+  "main": "run.py",
+  "scripts": {
+    "start": "python run.py",
+    "dev": "python run.py"
+  },
+  "keywords": ["fintech", "finance", "flask"],
+  "author": "",
+  "license": "MIT"
+}
