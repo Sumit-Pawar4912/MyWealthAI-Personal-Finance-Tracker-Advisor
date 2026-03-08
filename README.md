@@ -10,7 +10,7 @@
 [![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-Random%20Forest-F7931E?style=flat-square&logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
-[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-AI%20Chat-4285F4?style=flat-square&logo=google&logoColor=white)](https://ai.google.dev)
+[![Groq](https://img.shields.io/badge/Groq-AI%20Chat-4285F4?style=flat-square&logo=google&logoColor=white)](https://console.groq.com)
 [![Tests](https://img.shields.io/badge/Tests-160%20Passed%20✔-2ECC71?style=flat-square&logo=pytest&logoColor=white)](https://pytest.org)
 
 **An intelligent full-stack personal finance management platform powered by AI and Machine Learning.**
@@ -25,7 +25,7 @@
 
 ## 📖 About
 
-**MyWealthAI** is an intelligent financial management platform that helps you track expenses, get personalized AI advice, and make smarter money decisions. It combines a **Python Flask REST API**, a **React 18 + Vite frontend**, **Random Forest ML models**, and a **Google Gemini AI chatbot** — all amounts displayed in **Indian Rupee (₹)**.
+**MyWealthAI** is an intelligent financial management platform that helps you track expenses, get personalized AI advice, and make smarter money decisions. It combines a **Python Flask REST API**, a **React 18 + Vite frontend**, **Random Forest ML models**, and a **Groq AI chatbot** — all amounts displayed in **Indian Rupee (₹)**.
 
 > 🎓 Built as a Design Project — Academic Year 2025–2026
 
@@ -294,7 +294,7 @@
 - **AI Recommendations** — Rising Spending Alert, Transportation Alert, Savings Opportunity
 
 ### 💬 AI Financial Assistant
-- Google Gemini chatbot — *"Your personal finance expert, Available 24/7"*
+- Groq chatbot — *"Your personal finance expert, Available 24/7"*
 - Quick-ask suggestion buttons for common queries
 - Full chat interface with message timestamps
 - Prompt: *"Ask me anything about your finances...✨"*
@@ -348,7 +348,7 @@
 - Python 3.10+
 - Node.js 18+
 - npm
-- Google Gemini API Key → [Get one here](https://ai.google.dev)
+- Groq API Key → [Get one here](https://console.groq.com)
 
 ### 1️⃣ Clone the Repository
 
@@ -372,7 +372,7 @@ pip install -r requirements.txt
 
 # Create .env file
 SECRET_KEY=your-secret-key-here
-GEMINI_API_KEY=your-google-gemini-api-key
+GROQ_API_KEY=your-groq-api-key
 
 # Train ML models (required before first run)
 python train_models.py
@@ -447,7 +447,7 @@ All protected routes require: `Authorization: Bearer <token>`
 ### Other
 | Method | Endpoint | Auth | Description |
 |---|---|---|---|
-| `POST` | `/api/chatbot/message` | ✅ | Send message to Gemini AI |
+| `POST` | `/api/chatbot/message` | ✅ | Send message to Groq AI |
 | `GET` | `/api/chatbot/health` | ❌ | Chatbot health check |
 | `GET` | `/api/advice` | ✅ | AI Financial Advice list (priority-ranked) |
 | `GET` | `/api/report/transactions` | ✅ | Download CSV report |
@@ -487,7 +487,7 @@ pytest test_app.py -q
 | TestDashboard | 14 | Summary, balance, monthly chart data |
 | TestFinancialAdvice | 9 | Advice list, priority values, metrics |
 | TestAnalytics | 12 | All 6 ML endpoints, risk scoring |
-| TestChatbot | 7 | Gemini AI chat, empty message validation |
+| TestChatbot | 7 | Groq AI chat, empty message validation |
 | TestReport | 6 | CSV export, Content-Type, headers |
 | TestAdmin | 7 | RBAC — 403 for non-admin users |
 | TestRandomForestModel | 36 | All .pkl models load, predict, proba correct |
@@ -507,7 +507,7 @@ MyWealthAI/
 │   │   │   ├── dashboard_routes.py      # Summary, Balance, Monthly data
 │   │   │   ├── advice_routes.py         # AI Financial Advice (rule-based)
 │   │   │   ├── analytics_routes.py      # 6 ML analytics endpoints
-│   │   │   ├── chatbot_routes.py        # Google Gemini AI chatbot
+│   │   │   ├── chatbot_routes.py        # Groq AI chatbot
 │   │   │   ├── report_routes.py         # CSV export / download
 │   │   │   └── admin_routes.py          # Admin-only user management
 │   │   ├── models.py                    # SQLAlchemy (User, Transaction)
@@ -555,7 +555,7 @@ Create `.env` in `backend/`:
 
 ```env
 SECRET_KEY=your-super-secret-key-change-in-production
-GEMINI_API_KEY=your-google-gemini-api-key
+GROQ_API_KEY=your-groq-api-key
 DATABASE_URL=sqlite:///mywealthai.db
 FLASK_ENV=development
 ```
@@ -582,7 +582,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 🙏 Acknowledgements
 
-- [Google Gemini](https://ai.google.dev) — AI Financial Assistant
+- [Groq](https://console.groq.com) — AI Financial Assistant
 - [scikit-learn](https://scikit-learn.org) — Random Forest ML models
 - [Flask](https://flask.palletsprojects.com) — Backend framework
 - [React](https://react.dev) — Frontend framework
