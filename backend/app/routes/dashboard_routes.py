@@ -29,10 +29,8 @@ def get_summary():
         if not user:
             return jsonify({'error': 'Unauthorized'}), 401
         
-        # Get month from query params (default: current month)
         month = request.args.get('month', None)
         
-        # Build date range query
         if month:
             year, month_num = map(int, month.split('-'))
             start_date = datetime(year, month_num, 1).date()
@@ -48,30 +46,25 @@ def get_summary():
             else:
                 end_date = datetime(today.year, today.month + 1, 1).date()
         
-        # Query transactions for the selected month
         month_transactions = Transaction.query.filter(
             Transaction.user_id == user.id,
             Transaction.date >= start_date,
             Transaction.date < end_date
         ).all()
         
-        # Query ALL transactions for cumulative balance
         all_transactions = Transaction.query.filter(
             Transaction.user_id == user.id
         ).all()
         
-        # Calculate monthly totals
         month_income = sum(t.amount for t in month_transactions if t.type == 'income')
         month_expense = sum(t.amount for t in month_transactions if t.type == 'expense')
         month_balance = month_income - month_expense
         month_savings_rate = (month_balance / month_income * 100) if month_income > 0 else 0
         
-        # Calculate cumulative/all-time totals
         total_income = sum(t.amount for t in all_transactions if t.type == 'income')
         total_expense = sum(t.amount for t in all_transactions if t.type == 'expense')
         cumulative_balance = total_income - total_expense
         
-        # Category breakdown for the month
         categories = {}
         for t in month_transactions:
             if t.type == 'expense':
@@ -101,12 +94,10 @@ def get_current_balance():
         if not user:
             return jsonify({'error': 'Unauthorized'}), 401
         
-        # Query ALL transactions for this user
         all_transactions = Transaction.query.filter(
             Transaction.user_id == user.id
         ).all()
         
-        # Calculate all-time totals
         total_income = sum(t.amount for t in all_transactions if t.type == 'income')
         total_expense = sum(t.amount for t in all_transactions if t.type == 'expense')
         current_balance = total_income - total_expense
@@ -128,38 +119,37 @@ def get_monthly_data():
         user = get_user_from_token()
         if not user:
             return jsonify({'error': 'Unauthorized'}), 401
-        
-        # Get last 6 months data
+
         months_data = {}
         today = datetime.utcnow().date()
-        
+
         for i in range(6):
-            # Calculate date
-            month_date = today - timedelta(days=today.day + (i * 30))
-            year = month_date.year
-            month = month_date.month
-            
-            # Get first and last day of month
+            # Correctly calculate month by subtracting i months
+            month = today.month - i
+            year = today.year
+            while month <= 0:
+                month += 12
+                year -= 1
+
+            month_start = datetime(year, month, 1).date()
             if month == 12:
                 next_month_start = datetime(year + 1, 1, 1).date()
             else:
                 next_month_start = datetime(year, month + 1, 1).date()
-            month_start = datetime(year, month, 1).date()
-            
-            # Query transactions
+
             month_transactions = Transaction.query.filter(
                 Transaction.user_id == user.id,
                 Transaction.date >= month_start,
                 Transaction.date < next_month_start
             ).all()
-            
-            month_key = month_date.strftime('%Y-%m')
+
+            month_key = f"{year}-{str(month).zfill(2)}"
             months_data[month_key] = {
                 'income': sum(t.amount for t in month_transactions if t.type == 'income'),
                 'expense': sum(t.amount for t in month_transactions if t.type == 'expense'),
             }
-        
+
         return jsonify(months_data), 200
-    
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500

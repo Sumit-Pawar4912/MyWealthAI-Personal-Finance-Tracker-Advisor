@@ -32,6 +32,7 @@ export default function ExpenseCategoryChart({ data = null }) {
   const options = {
     responsive: true,
     maintainAspectRatio: true,
+    aspectRatio: 1,
     plugins: {
       legend: {
         position: 'bottom',
@@ -54,10 +55,12 @@ export default function ExpenseCategoryChart({ data = null }) {
     },
   }
 
-  return (
-    <div className="card">
-      <h3 className="text-lg font-bold text-gray-900 mb-4">Expense Categories</h3>
+return (
+  <div className="card">
+    <h3 className="text-lg font-bold text-gray-900 mb-4">Expense Categories</h3>
+    <div style={{ maxHeight: '300px', maxWidth: '300px', margin: '0 auto' }}>
       <Pie data={config} options={options} />
     </div>
-  )
+  </div>
+)
 }
