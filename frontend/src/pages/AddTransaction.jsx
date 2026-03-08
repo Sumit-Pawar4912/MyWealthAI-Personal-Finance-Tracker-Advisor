@@ -44,7 +44,7 @@ export default function AddTransaction() {
       const expenseAmount = parseFloat(amount)
       if (expenseAmount > balance) {
         setBalanceError(
-          `Insufficient balance! Current balance: $${balance.toFixed(2)}, Expense: $${expenseAmount.toFixed(2)}`
+          `Insufficient balance! Current balance: ${balance.toFixed(2)}, Expense: ${expenseAmount.toFixed(2)}`
         )
       } else {
         setBalanceError('')
@@ -63,7 +63,7 @@ export default function AddTransaction() {
         {type === 'expense' && (
           <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
             <p className="text-sm text-gray-600">Current Balance</p>
-            <p className="text-2xl font-bold text-blue-600">${balance.toFixed(2)}</p>
+            <p className="text-2xl font-bold text-blue-600">₹{balance.toFixed(2)}</p>
           </div>
         )}
 
