@@ -1,5 +1,5 @@
 {
-  "trained_at": "2026-03-05T00:04:21.795235",
+  "trained_at": "2026-09-30T00:14:29.958614",
   "models": {
     "spending_predictor": {
       "type": "RandomForestRegressor",

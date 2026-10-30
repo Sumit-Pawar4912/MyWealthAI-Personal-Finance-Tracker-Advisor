@@ -1,30 +1,37 @@
 from flask import Flask
 from flask_cors import CORS
-from sqlalchemy.pool import QueuePool
+from dotenv import load_dotenv
 import os
 from datetime import datetime
+
+load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
 
-# Configuration
+# DATABASE_URL accepts PostgreSQL URLs such as
+# postgresql+psycopg://user:password@localhost:5432/mywelthai.
+database_url = os.getenv('DATABASE_URL', 'sqlite:///mywelthai.db')
+if database_url.startswith('postgres://'):
+    database_url = database_url.replace('postgres://', 'postgresql+psycopg://', 1)
+elif database_url.startswith('postgresql://'):
+    database_url = database_url.replace('postgresql://', 'postgresql+psycopg://', 1)
+
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///mywelthai.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JSON_SORT_KEYS'] = False
-
-# SQLite connection pool settings for concurrent access
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
-    'connect_args': {
-        'timeout': 20,  # Increase timeout to 20 seconds
-        'check_same_thread': False,
-    },
-    'poolclass': QueuePool,
-    'pool_size': 20,           # More connections
-    'max_overflow': 20,        # Allow overflow beyond pool_size
+    'pool_size': int(os.getenv('DB_POOL_SIZE', '10')),
+    'max_overflow': int(os.getenv('DB_MAX_OVERFLOW', '20')),
     'pool_recycle': 3600,
     'pool_pre_ping': True,
 }
+if database_url.startswith('sqlite:'):
+    app.config['SQLALCHEMY_ENGINE_OPTIONS']['connect_args'] = {
+        'timeout': 20,
+        'check_same_thread': False,
+    }
 
 # Enable CORS
 CORS(app, resources={r"/api/*": {"origins": "*"}})

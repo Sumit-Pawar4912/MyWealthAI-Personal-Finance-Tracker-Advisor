@@ -8,7 +8,7 @@ Flask REST API backend for the MyWelthAI personal finance tracker application.
 - ✅ Transaction management (CRUD operations)
 - ✅ Dashboard summary endpoints
 - ✅ AI-powered financial advice
-- ✅ SQLite database
+- ✅ SQLite and PostgreSQL database support
 - ✅ CORS enabled for React frontend
 - ✅ RESTful API design
 
@@ -52,9 +52,14 @@ pip install -r requirements.txt
 SECRET_KEY=your-secret-key-here
 FLASK_ENV=development
 DEBUG=True
-DATABASE_URL=sqlite:///mywelthai.db
+# PostgreSQL (recommended for production):
+DATABASE_URL=postgresql+psycopg://username:password@localhost:5432/mywelthai
+# SQLite local fallback:
+# DATABASE_URL=sqlite:///mywelthai.db
 PORT=5000
 ```
+
+Create the PostgreSQL database (`mywelthai`) before starting the backend. The app creates its tables on startup. Existing SQLite data is not automatically copied; migrate it separately if needed.
 
 ### Running the Backend
 
